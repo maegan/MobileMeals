@@ -9,6 +9,8 @@ const SafeArea = styled(SafeAreaView)`
   background-color: "#fff";
   margin-top: ${StatusBar.currentHeight}px;
 `;
+// may need to use this if issues on iOS:
+//${StatusBar.currentHeight && `margin-top: ${StatusBar.currentHeight}px`};
 
 const SearchContainer = styled(View)`
   flex: 0.08;
