@@ -7,7 +7,7 @@ import styled from "styled-components/native";
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
   background-color: "#fff";
-  margin-top: StatusBar.currentHeight;
+  margin-top: ${StatusBar.currentHeight}px;
 `;
 
 const SearchContainer = styled(View)`
