@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/native";
-import { Text, View } from "react-native";
+import { Text, View, Image } from "react-native";
 import { Card } from "react-native-paper";
 import {
   useFonts as useOswald,
@@ -9,6 +9,8 @@ import {
 import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
 import { SvgXml } from "react-native-svg";
 import star from "../../../assets/star";
+import open from "../../../assets/open";
+import { Spacer } from "../../components/spacer/spacer.component";
 
 const RestaurantCard = styled(Card)`
   backgroundcolor: ${(props) => props.theme.colors.bg.primary};
@@ -32,8 +34,18 @@ const Address = styled(Text)`
 
 const Rating = styled(View)`
   flex-direction: row;
+`;
+
+const Status = styled(View)`
+  flex-direction: row;
+  justify-content: space-between;
   padding-top: ${(props) => props.theme.space[2]};
   padding-bottom: ${(props) => props.theme.space[2]};
+`;
+
+const StatusEnd = styled(View)`
+  flex-direction: row;
+  justify-content: flex-end;
 `;
 
 export const RestaurantInfo = ({ restaurant = {} }) => {
@@ -48,14 +60,14 @@ export const RestaurantInfo = ({ restaurant = {} }) => {
 
   const {
     name = "Some Restaurant",
-    icon,
+    icon = "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/lodging-71.png",
     photos = [
       "https://img.freepik.com/premium-photo/pizza_100342-33.jpg?w=740",
     ],
     address = "515 Loudon Rd, Loudonville, NY",
     isOpenNow = true,
     rating = 3.7,
-    isClosedTemporarily,
+    isClosedTemporarily = true,
   } = restaurant;
 
   const ratingArray = Array.from(new Array(Math.floor(rating)));
@@ -65,11 +77,24 @@ export const RestaurantInfo = ({ restaurant = {} }) => {
       <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
       <Card.Content>
         <Title>{name}</Title>
-        <Rating>
-          {ratingArray.map(() => (
-            <SvgXml xml={star} width={20} height={20} />
-          ))}
-        </Rating>
+        <Status>
+          <Rating>
+            {ratingArray.map(() => (
+              <SvgXml xml={star} width={20} height={20} />
+            ))}
+          </Rating>
+          <StatusEnd>
+            {isClosedTemporarily && (
+              <Text style={{ color: "red" }}>Closed Temporarily</Text>
+            )}
+            <Spacer position="left" size="large">
+              {isOpenNow && <SvgXml xml={open} width={20} height={20} />}
+            </Spacer>
+            <Spacer position="left" size="large">
+              <Image style={{ width: 15, height: 15 }} source={{ uri: icon }} />
+            </Spacer>
+          </StatusEnd>
+        </Status>
         <Address>{address}</Address>
       </Card.Content>
     </RestaurantCard>
