@@ -42,7 +42,7 @@ export const RestaurantInfo = ({ restaurant = {} }) => {
     name = "Some restaurant",
     icon,
     photos = [
-      "https://img.freepik.com/premium-photo/pizza_100342-33.jpg  ?w=740",
+      "https://img.freepik.com/premium-photo/pizza_100342-33.jpg?w=740",
     ],
     address = "515 Loudon Rd, Loudonville, NY",
     isOpenNow = true,
