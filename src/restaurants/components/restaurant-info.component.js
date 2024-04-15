@@ -47,11 +47,11 @@ export const RestaurantInfo = ({ restaurant = {} }) => {
     address = "515 Loudon Rd, Loudonville, NY",
     isOpenNow = true,
     rating = 3.2,
-    isClosedTemporarily = false,
+    isClosedTemporarily = true,
   } = restaurant;
 
   const ratingArray = Array.from(new Array(Math.floor(rating)));
-  console.log(ratingArray);
+
   return (
     <RestaurantCard>
       <RestaurantCardCover key={name} source={{ uri: photos[0] }} />
