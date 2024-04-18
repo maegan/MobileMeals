@@ -7,42 +7,15 @@ import star from "../../../assets/star";
 import open from "../../../assets/open";
 import { Spacer } from "../../components/spacer/spacer.component";
 import { Text } from "../../components/typography/text.component";
-
-const Address = styled(Text)`
-  color: ${(props) => props.theme.colors.ui.primary};
-  font-size: ${(props) => props.theme.fontSizes.caption};
-  font-family: ${(props) => props.theme.fonts.body};
-`;
-
-const RestaurantCard = styled(Card)`
-  backgroundcolor: ${(props) => props.theme.colors.bg.primary};
-`;
-
-const RestaurantCardCover = styled(Card.Cover)`
-  padding: ${(props) => props.theme.space[3]};
-  backgroundcolor: ${(props) => props.theme.colors.bg.primary};
-`;
-
-const Rating = styled(View)`
-  flex-direction: row;
-`;
-
-const Status = styled(View)`
-  flex-direction: row;
-  justify-content: space-between;
-  padding-top: ${(props) => props.theme.space[2]};
-  padding-bottom: ${(props) => props.theme.space[2]};
-`;
-
-const StatusEnd = styled(View)`
-  flex-direction: row;
-  justify-content: flex-end;
-`;
-
-const Icon = styled(Image)`
-  width: 15px;
-  height: 15px;
-`;
+import {
+  RestaurantCard,
+  RestaurantCardCover,
+  Address,
+  Rating,
+  Status,
+  StatusEnd,
+  Icon,
+} from "./restaurant-info-card.styles";
 
 export const RestaurantInfo = ({ restaurant = {} }) => {
   const {
