@@ -1,11 +1,46 @@
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import React from "react";
-import { Text, View, Button, TextInput } from "react-native";
+import { Text, View, Button, TextInput, SafeAreaView } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+// You can import Ionicons from @expo/vector-icons/Ionicons if you use Expo or
+// react-native-vector-icons/Ionicons otherwise.
+//import Ionicons from "react-native-vector-icons/Ionicons";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
-function HomeScreen({ navigation, route }) {
+const Tab = createBottomTabNavigator();
+
+function HomeScreen({ navigation }) {
+  const [count, setCount] = React.useState(0);
+
+  React.useEffect(() => {
+    // Use `setOptions` to update the button that we previously specified
+    // Now the button includes an `onPress` handler to update the count
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          onPress={() => setCount((c) => c + 1)}
+          title="Update count"
+          color="#000"
+        />
+      ),
+    });
+  }, [navigation]);
+
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>Count: {count}</Text>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate("Details")}
+      />
+    </View>
+  );
+}
+
+function HomeScreenPost({ navigation, route }) {
   React.useEffect(() => {
     if (route.params?.post) {
       // Post updated, do something with `route.params.post`
@@ -41,7 +76,7 @@ function CreatePostScreen({ navigation, route }) {
         onPress={() => {
           // Pass and merge params back to home screen
           navigation.navigate({
-            name: "Home",
+            name: "PostHome",
             params: { post: postText },
             merge: true,
           });
@@ -73,33 +108,90 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Home"
-        screenOptions={{
-          title: "Overview",
-          headerStyle: {
-            backgroundColor: "#ff0000",
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === "Home") {
+              iconName = focused ? "home" : "home-outline";
+            } else if (route.name === "Details") {
+              iconName = focused ? "list" : "list-outline";
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
           },
-          headerTintColor: "#fff",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
+          tabBarActiveTintColor: "tomato",
+          tabBarInactiveTintColor: "gray",
+        })}
       >
-        <Stack.Screen
+        <Tab.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: "Homepage" }}
+          options={({ navigation, route }) => ({
+            title: "Homepage",
+            // Add a placeholder button without the `onPress` to avoid flicker
+            headerRight: () => <Button title="" />,
+          })}
         />
-        <Stack.Screen name="Details" component={DetailsScreen} />
-        <Stack.Screen name="CreatePost" component={CreatePostScreen} />
-      </Stack.Navigator>
+        <Tab.Screen name="Details" component={DetailsScreen} />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
-/* <ThemeProvider theme={theme}>
-          <RestaurantsScreen />
-          <ExpoStatusBar />
-        </ThemeProvider>
-        <ExpoStatusBar style="auto" /> */
+/* commented out when switch to tab navigator
+
+<Stack.Navigator
+initialRouteName="Home"
+screenOptions={{
+  title: "Overview",
+  headerStyle: {
+    backgroundColor: "#ff0000",
+  },
+  headerTintColor: "#fff",
+  headerTitleStyle: {
+    fontWeight: "bold",
+  },
+}}
+>
+<Stack.Screen
+  name="Nest"
+  component={Nest}
+  options={{ headerShown: false }}
+/>
+<Stack.Screen
+  name="PostHome"
+  component={HomeScreenPost}
+  options={{
+    title: "HomepagePost",
+    headerRight: () => (
+      <Button
+        onPress={() => alert("This is a button!")}
+        title="Info"
+        color="#fff"
+      />
+    ),
+  }}
+/>
+<Stack.Screen
+  name="Home"
+  component={HomeScreen}
+  options={({ navigation, route }) => ({
+    title: "Homepage",
+    // Add a placeholder button without the `onPress` to avoid flicker
+    headerRight: () => <Button title="" />,
+  })}
+/>
+
+<Stack.Screen
+  name="Details"
+  component={DetailsScreen}
+  options={{
+    headerBackTitle: "Customize this",
+    headerBackTitleStyle: { fontSize: 15 },
+  }}
+/>
+<Stack.Screen name="CreatePost" component={CreatePostScreen} />
+</Stack.Navigator> */
