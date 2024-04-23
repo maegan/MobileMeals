@@ -1,16 +1,9 @@
 import React from "react";
-import { View, SafeAreaView, StatusBar, FlatList } from "react-native";
+import { View, FlatList } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { RestaurantInfo } from "../components/restaurant-info.component";
 import styled from "styled-components/native";
-
-const SafeArea = styled(SafeAreaView)`
-  flex: 1;
-  background-color: ${(props) => props.theme.colors.bg.primary};
-  margin-top: ${StatusBar.currentHeight}px;
-`;
-// may need to use this if issues on iOS:
-//${StatusBar.currentHeight && `margin-top: ${StatusBar.currentHeight}px`};
+import { SafeArea } from "../../components/utility/safe-area.component";
 
 const SearchContainer = styled(View)`
   padding: ${(props) => props.theme.space[3]};

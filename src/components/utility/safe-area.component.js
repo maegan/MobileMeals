@@ -1,0 +1,10 @@
+import { StatusBar, SafeAreaView } from "react-native";
+import styled from "styled-components";
+
+export const SafeArea = styled(SafeAreaView)`
+  flex: 1;
+  background-color: ${(props) => props.theme.colors.bg.primary};
+  margin-top: ${StatusBar.currentHeight}px;
+`;
+// may need to use this if issues on iOS:
+//${StatusBar.currentHeight && `margin-top: ${StatusBar.currentHeight}px`};
