@@ -12,7 +12,7 @@ export const restaurantsRequest = (location = "37.7749295,-122.4194155") => {
     resolve(mock);
   });
 };
-const restaurantsTransform = ({ results = [] }) => {
+export const restaurantsTransform = ({ results = [] }) => {
   const newResults = camelize(results);
   const mappedResults = newResults.map((restaurant) => {
     return {
