@@ -1,5 +1,5 @@
 import { format as prettyFormat } from "pretty-format";
-import { mocks } from "./mock"; // defaults to index.js
+import { mocks, mockImages } from "./mock"; // defaults to index.js
 import camelize from "camelize";
 
 export const restaurantsRequest = (location = "37.7749295,-122.4194155") => {
@@ -13,8 +13,10 @@ export const restaurantsRequest = (location = "37.7749295,-122.4194155") => {
   });
 };
 export const restaurantsTransform = ({ results = [] }) => {
-  const newResults = camelize(results);
-  const mappedResults = newResults.map((restaurant) => {
+  const mappedResults = results.map((restaurant) => {
+    restaurant.photos = restaurant.photos.map((p) => {
+      return mockImages[Math.ceil(Math.random() * (mockImages.length - 1))];
+    });
     return {
       ...restaurant,
       isOpenNow: restaurant.openingHours && restaurant.openingHours.openNow,
@@ -22,7 +24,7 @@ export const restaurantsTransform = ({ results = [] }) => {
     };
   });
   console.log(prettyFormat(mappedResults));
-  return mappedResults;
+  return camelize(mappedResults);
 };
 
 /*
