@@ -2,7 +2,7 @@ import { format as prettyFormat } from "pretty-format";
 import { mocks, mockImages } from "./mock"; // defaults to index.js
 import camelize from "camelize";
 
-export const restaurantsRequest = (location = "37.7749295,-122.4194155") => {
+export const restaurantsRequest = (location) => {
   //console.log(prettyFormat(mocks[location]));
   return new Promise((resolve, reject) => {
     const mock = mocks[location];
@@ -21,9 +21,10 @@ export const restaurantsTransform = ({ results = [] }) => {
       ...restaurant,
       isOpenNow: restaurant.openingHours && restaurant.openingHours.openNow,
       isClosedTemporarily: restaurant.businessStatus === "CLOSED_TEMPORARILY",
+      address: restaurant.vicinity,
     };
   });
-  console.log(prettyFormat(mappedResults));
+  //console.log(prettyFormat(mappedResults));
   return camelize(mappedResults);
 };
 
