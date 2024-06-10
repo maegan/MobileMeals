@@ -13,24 +13,23 @@ export const LocationContextProvider = ({ children }) => {
     setIsLoading(true);
     console.log(searchKeyword);
     setKeyword(searchKeyword);
-    if (!searchKeyword.length) {
-      // don't do anything
+  };
+
+  useEffect(() => {
+    if (!keyword.length) {
       return;
     }
-
-    locationRequest(searchKeyword.toLowerCase())
+    locationRequest(keyword.toLowerCase())
       .then(locationTransform)
       .then((result) => {
         setIsLoading(false);
         setLocation(result);
-        console.log(result);
       })
       .catch((err) => {
         setIsLoading(false);
         setError(err);
-        console.log(err);
       });
-  };
+  }, [keyword]);
 
   return (
     <LocationContext.Provider
